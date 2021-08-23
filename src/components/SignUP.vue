@@ -1,14 +1,18 @@
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit">
     <label for="Email">Email</label>
     <input type="text" id="Email" class="form-control" v-model="email" />
     <label for="password">password</label>
+
     <input
       type="password"
       id="password"
       class="form-control"
       v-model="password"
     />
+    <div v-if="passwordError" class="text-danger">
+      {{ passwordError }}
+    </div>
     <label for="role" id="">Role</label>
     <select class="form-select" v-model="role">
       <option value="designer">Designer</option>
@@ -52,6 +56,7 @@ export default {
       terms: false,
       tempSkills: [],
       skills: [],
+      passwordError: "",
     };
   },
   methods: {
@@ -65,6 +70,15 @@ export default {
     },
     deleteSkill(skill) {
       this.skills = this.skills.filter((item) => skill !== item);
+    },
+    handleSubmit() {
+      this.passwordError =
+        this.password.length > 6 ? "" : "Password must be 7 chars long";
+      if (!this.passwordError) {
+        console.log(this.email);
+        console.log(this.password);
+        console.log(this.skills);
+      }
     },
   },
 };
