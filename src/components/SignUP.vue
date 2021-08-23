@@ -29,10 +29,10 @@
       />
       <div
         v-for="skill in skills"
-        class="badge bg-secondary p-2 m-1"
+        class="badge bg-secondary p-2 m-1 mt-3"
         :key="skill"
       >
-        {{ skill }}
+        <span class="skill" @click="deleteSkill(skill)"> {{ skill }}</span>
       </div>
     </div>
 
@@ -57,9 +57,14 @@ export default {
   methods: {
     addSkill(e) {
       if (e.key === "," && this.tempSkills) {
-        this.skills.push(this.tempSkills);
+        if (!this.skills.includes(this.tempSkills)) {
+          this.skills.push(this.tempSkills);
+        }
         this.tempSkills = "";
       }
+    },
+    deleteSkill(skill) {
+      this.skills = this.skills.filter((item) => skill !== item);
     },
   },
 };
@@ -83,5 +88,8 @@ label,
 }
 input[type="checkbox"] {
   margin-right: 0.5rem;
+}
+.skill {
+  cursor: pointer;
 }
 </style>
